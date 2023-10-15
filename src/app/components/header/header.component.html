@@ -1,0 +1,19 @@
+<mat-toolbar class="bg-color header">
+  <div>
+    <button mat-icon-button routerLink="/">
+      <img src="../../../assets/chef.png" />
+    </button>
+    <a mat-button class="logo" routerLink="/"> Mamma Mia </a>
+  </div>
+  <div>
+    <a mat-button routerLink="/pizza-maker">Kitchen</a>
+    <a mat-button routerLink="/previous-orders">Previous Orders</a>
+
+    <ng-container *ngIf="!(isLoggedIn$ | async)">
+      <a mat-button routerLink="/login">Login</a>
+      <a mat-button routerLink="/register">Register</a>
+    </ng-container>
+
+    <a mat-button (click)="onLogout()" *ngIf="isLoggedIn$ | async">Logout</a>
+  </div>
+</mat-toolbar>

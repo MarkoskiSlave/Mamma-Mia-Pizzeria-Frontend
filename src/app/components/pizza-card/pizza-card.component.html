@@ -1,0 +1,20 @@
+<mat-card *ngIf="!!pizza" appHotPizza [ingredients]="pizza.ingredients">
+  <mat-card-header>{{ pizza.name }}</mat-card-header>
+  <img
+    mat-card-image
+    height="300px"
+    width="300px"
+    [src]="pizza.image"
+    [alt]="pizza.name"
+  />
+  <mat-card-content>
+    <mat-chip *ngFor="let ingredient of pizza.ingredients">
+      {{ ingredient | normalizeEnum }}
+    </mat-chip>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-mini-fab class="bg-color" (click)="selectPizza()">
+      <mat-icon>local_pizza</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

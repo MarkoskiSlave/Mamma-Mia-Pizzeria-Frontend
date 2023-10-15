@@ -1,0 +1,57 @@
+<div class="wrapper">
+  <div class="container">
+    <h1>Your order:</h1>
+    <mat-list>
+      <mat-list-item *ngFor="let pizza of activeOrder$ | async; let i = index">
+        <span matListItemTitle>
+          <ng-container *ngIf="!showTitleInput; else titleInputContainer">
+            {{ pizza.name }}
+            <button
+              mat-icon-button
+              matTooltip="Add custom title"
+              (click)="showPizzaTitleInput()"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </ng-container>
+          <ng-template #titleInputContainer>
+            <mat-form-field>
+              <mat-label>Add custom title</mat-label>
+              <input matInput type="text" [formControl]="pizzaTitle" />
+              <button
+                [disabled]="pizzaTitle.invalid"
+                matIconSuffix
+                mat-icon-button
+                (click)="saveTitle(pizza.id)"
+              >
+                <mat-icon>save</mat-icon>
+              </button>
+            </mat-form-field>
+          </ng-template>
+        </span>
+        <span matListItemLine>
+          Size: {{ pizza.size | normalizeEnum }} | Ingredients:
+          {{ pizza.ingredients | normalizeEnum }}
+        </span>
+        <span matListItemLine>
+          Price: {{ pizza.price | currency : "EUR" : true }}
+        </span>
+        <button mat-icon-button color="warn" (click)="onDeletePizza(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+
+    <div>
+      <h3>
+        Total price:
+        {{
+          calculateTotalPrice(activeOrder$ | async) | currency : "EUR" : true
+        }}
+      </h3>
+      <button mat-raised-button matStepperNext color="primary">
+        Go to checkout
+      </button>
+    </div>
+  </div>
+</div>
